@@ -1,686 +1,117 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="scroll-smooth">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>帮我做平台 - 数字员工开源生态</title>
-    <meta name="description" content="面向中国小微企业、一人公司、个体创业者的开源数字员工资产包标准库与能力集合。开箱可用，可导入平台，可社区共创。">
-    <meta name="keywords" content="数字员工, AI Agent, 开源, 小微企业, 一人公司, 自动化, 业务技能, 工作流">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        accent: {
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                        },
-                        dark: {
-                            800: '#0f172a',
-                            900: '#020617',
-                            950: '#01040f',
-                        }
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'gradient-x': 'gradient-x 15s ease infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        'gradient-x': {
-                            '0%, 100%': { 'background-position': '0% 50%' },
-                            '50%': { 'background-position': '100% 50%' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>帮我做平台 · 数字员工开源生态</title>
+<meta name="description" content="25 名开箱即用的中文数字员工：无需 API Key、无需部署、平台无关。137 技能 + 119 工作流，全部开源。">
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#3fb950;--accent2:#58a6ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:72px 0 40px;text-align:center;border-bottom:1px solid var(--border)}
+header h1{font-size:2.6rem;letter-spacing:.02em}
+header h1 em{font-style:normal;color:var(--accent)}
+.tagline{margin:14px auto 0;max-width:640px;color:var(--muted);font-size:1.05rem}
+.cta{margin-top:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--text);transition:.2s}
+.btn:hover{border-color:var(--accent2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#04140a}
+.btn.primary:hover{filter:brightness(1.1)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:-28px auto 0;max-width:860px;padding:0 20px;position:relative}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 10px;text-align:center}
+.stat b{display:block;font-size:1.7rem;color:var(--accent)}
+.stat span{color:var(--muted);font-size:.85rem}
+main{padding:56px 0 80px}
+.intro{max-width:720px;margin:0 auto 44px;text-align:center;color:var(--muted)}
+.intro b{color:var(--text)}
+.group{margin-top:48px}
+.group-head h2{font-size:1.45rem}
+.group-head p{color:var(--muted);font-size:.95rem;margin-top:4px}
+.grid{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);transition:.2s;display:block}
+.card:hover{transform:translateY(-3px);border-color:var(--accent2)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.card-body{padding:14px 16px 16px}
+.card-body h3{font-size:1.08rem}
+.desc{color:var(--muted);font-size:.88rem;margin-top:4px}
+.meta{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.meta .play{color:var(--accent);font-weight:600;margin-left:auto}
+.spec{margin-top:64px;border:1px solid var(--border);border-radius:14px;padding:28px;background:var(--panel)}
+.spec h2{font-size:1.3rem}
+.spec ul{margin:12px 0 0 20px;color:var(--muted)}
+.spec a{color:var(--accent2)}
+footer{border-top:1px solid var(--border);padding:26px 0;color:var(--muted);font-size:.88rem;text-align:center}
+footer a{color:var(--accent2)}
+@media(max-width:640px){header h1{font-size:1.9rem}}
+</style>
 </head>
-<body class="font-sans text-slate-300 bg-dark-950 antialiased selection:bg-primary-500/30 selection:text-primary-200">
+<body>
+<header class="wrap">
+<h1>帮我做平台<em>.</em><br>数字员工开源生态</h1>
+<p class="tagline">25 名开箱即用的中文数字员工，覆盖独立开发者、自媒体、电商与本地生活四大客群——像招一个远程同事一样，给生意配上 AI 员工。</p>
+<div class="cta">
+<a class="btn primary" href="https://github.com/bangwozuo/awesome-digital-employees-zh">GitHub 总入口</a>
+<a class="btn" href="https://github.com/bangwozuo/digital-employees-hub-zh">员工总目录 + 视频索引</a>
+</div>
+</header>
+<div class="stats">
+<div class="stat"><b>25</b><span>数字员工</span></div>
+<div class="stat"><b>137</b><span>原子技能</span></div>
+<div class="stat"><b>119</b><span>场景工作流</span></div>
+<div class="stat"><b>256</b><span>演示视频</span></div>
+<div class="stat"><b>4</b><span>覆盖客群</span></div>
+</div>
+<main class="wrap">
+<p class="intro"><b>无需 API Key · 无需部署 · 平台无关</b>——每个数字员工是一个开源仓库：SKILL.md 技能 + 工作流 + 演示视频 + 结构校验，导入 Coze / WorkBuddy / Dify / Claude / ChatGPT 即用。</p>
+<section class="group"><div class="group-head"><h2>独立开发者 / 一人公司</h2><p>增长获客、发布冲刺、SEO 矩阵、反馈聚合与多平台分发 · 5 名员工</p></div><div class="grid">
+<a class="card" href="https://github.com/bangwozuo/coldstart-growth-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/coldstart-growth-zh@main/docs/assets/hero.gif" alt="出海增长官 演示"><div class="card-body"><h3>出海增长官</h3><p class="desc">出海冷启动获客官（Build-in-Public 内容引擎）</p><div class="meta"><span>7 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/launch-commander-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/launch-commander-zh@main/docs/assets/hero.gif" alt="发布指挥官 演示"><div class="card-body"><h3>发布指挥官</h3><p class="desc">发布日冲刺指挥官（PH Launch Commander）</p><div class="meta"><span>9 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/seo-matrix-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/seo-matrix-zh@main/docs/assets/hero.gif" alt="SEO 架构师 演示"><div class="card-body"><h3>SEO 架构师</h3><p class="desc">SEO 内容矩阵助理（独立站增长助理）</p><div class="meta"><span>7 技能</span><span>6 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/feedback-hub-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/feedback-hub-zh@main/docs/assets/hero.gif" alt="反馈分析师 演示"><div class="card-body"><h3>反馈分析师</h3><p class="desc">用户反馈聚合分析师</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/multi-publish-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/multi-publish-zh@main/docs/assets/hero.gif" alt="分发中控 演示"><div class="card-body"><h3>分发中控</h3><p class="desc">多平台发布与数据回捞助理</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+</div></section>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
-                <a href="#" class="flex items-center gap-3 group">
-                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/40 transition-shadow">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <span class="text-lg font-bold text-white tracking-tight">帮我做<span class="text-primary-400">平台</span></span>
-                </a>
-                
-                <div class="hidden lg:flex items-center gap-1">
-                    <a href="#platform" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">平台介绍</a>
-                    <a href="#assets" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">核心资产</a>
-                    <a href="#repositories" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">仓库矩阵</a>
-                    <a href="#quickstart" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">快速开始</a>
-                    <a href="#community" class="nav-link px-4 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">社区</a>
-                </div>
+<section class="group"><div class="group-head"><h2>自媒体创作者</h2><p>选题、脚本、评论区、分发改写与跨平台数据复盘 · 6 名员工</p></div><div class="grid">
+<a class="card" href="https://github.com/bangwozuo/topic-planner-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/topic-planner-zh@main/docs/assets/hero.gif" alt="选题策划师 演示"><div class="card-body"><h3>选题策划师</h3><p class="desc">爆款选题策划师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/script-writer-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/script-writer-zh@main/docs/assets/hero.gif" alt="脚本创作师 演示"><div class="card-body"><h3>脚本创作师</h3><p class="desc">短视频脚本创作师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/engagement-ops-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/engagement-ops-zh@main/docs/assets/hero.gif" alt="评论运营官 演示"><div class="card-body"><h3>评论运营官</h3><p class="desc">评论区运营官</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/funnel-builder-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/funnel-builder-zh@main/docs/assets/hero.gif" alt="引流转化师 演示"><div class="card-body"><h3>引流转化师</h3><p class="desc">私域引流转化师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/cross-post-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/cross-post-zh@main/docs/assets/hero.gif" alt="分发改写师 演示"><div class="card-body"><h3>分发改写师</h3><p class="desc">多平台分发改写师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/data-recap-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/data-recap-zh@main/docs/assets/hero.gif" alt="数据复盘师 演示"><div class="card-body"><h3>数据复盘师</h3><p class="desc">跨平台数据复盘师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+</div></section>
 
-                <div class="flex items-center gap-3">
-                    <a href="https://github.com/bangwozuo" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg transition-all hover:scale-105">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        GitHub
-                    </a>
-                    <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="lg:hidden hidden border-t border-white/5 bg-dark-900/95 backdrop-blur-xl">
-            <div class="px-4 py-4 space-y-1">
-                <a href="#platform" class="block px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">平台介绍</a>
-                <a href="#assets" class="block px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">核心资产</a>
-                <a href="#repositories" class="block px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">仓库矩阵</a>
-                <a href="#quickstart" class="block px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">快速开始</a>
-                <a href="#community" class="block px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">社区</a>
-            </div>
-        </div>
-    </nav>
+<section class="group"><div class="group-head"><h2>电商小卖家</h2><p>商品视觉、客服、评价、Listing、多店运营与选品 · 7 名员工</p></div><div class="grid">
+<a class="card" href="https://github.com/bangwozuo/product-visual-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/product-visual-zh@main/docs/assets/hero.gif" alt="商品视觉师 演示"><div class="card-body"><h3>商品视觉师</h3><p class="desc">视觉设计师·小图</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/shop-support-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/shop-support-zh@main/docs/assets/hero.gif" alt="店铺客服官 演示"><div class="card-body"><h3>店铺客服官</h3><p class="desc">客服专员·小服</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/review-manager-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/review-manager-zh@main/docs/assets/hero.gif" alt="评价运营官 演示"><div class="card-body"><h3>评价运营官</h3><p class="desc">评价运营专员·小评</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/listing-copy-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/listing-copy-zh@main/docs/assets/hero.gif" alt="Listing 文案师 演示"><div class="card-body"><h3>Listing 文案师</h3><p class="desc">上架文案专员·小文</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/multi-shop-ops-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/multi-shop-ops-zh@main/docs/assets/hero.gif" alt="多店运营官 演示"><div class="card-body"><h3>多店运营官</h3><p class="desc">多平台运营助理·小铺</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/shop-video-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/shop-video-zh@main/docs/assets/hero.gif" alt="店铺编导 演示"><div class="card-body"><h3>店铺编导</h3><p class="desc">内容编导·小导</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/product-research-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/product-research-zh@main/docs/assets/hero.gif" alt="选品分析师 演示"><div class="card-body"><h3>选品分析师</h3><p class="desc">选品分析师·小察</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+</div></section>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Background Effects -->
-        <div class="absolute inset-0 bg-dark-950">
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-[128px] animate-pulse-slow"></div>
-            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-600/20 rounded-full blur-[128px] animate-pulse-slow" style="animation-delay: 2s;"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-500/5 rounded-full blur-[100px]"></div>
-        </div>
-        
-        <!-- Grid Pattern -->
-        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
-
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-            <div class="text-center max-w-4xl mx-auto">
-                <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-primary-300 mb-8 animate-fade-in-up">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    开源数字员工资产包标准库 V2.1
-                </div>
-                
-                <!-- Title -->
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    为每个小微企业<br>
-                    <span class="bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">雇佣数字员工</span>
-                </h1>
-                
-                <!-- Subtitle -->
-                <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
-                    面向中国小微企业、一人公司、个体创业者的开源数字员工资产包标准库。
-                    开箱可用，可导入平台，可社区共创。
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <a href="#quickstart" class="group px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-500 hover:to-accent-500 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all hover:scale-105 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        快速开始
-                    </a>
-                    <a href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" rel="noopener" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-semibold rounded-xl transition-all hover:scale-105 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        浏览仓库
-                    </a>
-                </div>
-                
-                <!-- Stats -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">15</div>
-                        <div class="text-sm text-slate-500 mt-1">开源仓库</div>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">20</div>
-                        <div class="text-sm text-slate-500 mt-1">行业分类</div>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">6</div>
-                        <div class="text-sm text-slate-500 mt-1">核心资产类型</div>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">10+</div>
-                        <div class="text-sm text-slate-500 mt-1">开箱示例</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-        </div>
-    </section>
-
-    <!-- Platform Introduction -->
-    <section id="platform" class="relative py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="reveal-on-scroll">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-sm text-primary-400 mb-6">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        什么是数字员工
-                    </div>
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-                        不是 AI 工具，<br>
-                        是<span class="text-primary-400">能干活</span>的员工
-                    </h2>
-                    <p class="text-lg text-slate-400 leading-relaxed mb-8">
-                        数字员工是围绕具体岗位和场景构建的完整 AI 能力集合。每个数字员工包含业务技能、业务连接器、场景工作流、日常任务和定时任务，能够像真实员工一样持续为企业创造价值。
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-white font-semibold mb-1">岗位级能力封装</h3>
-                                <p class="text-slate-500 text-sm">按产品经理、客服、运营、销售等真实岗位设计，不是泛泛的 AI 工具</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-accent-500/10 border border-accent-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-white font-semibold mb-1">场景化工作流</h3>
-                                <p class="text-slate-500 text-sm">每个工作流服务一个明确业务场景，如竞品日报、会议纪要、内容发布</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-white font-semibold mb-1">安全可控</h3>
-                                <p class="text-slate-500 text-sm">明确的能力边界、权限声明、Mock 测试，不碰真实密钥和客户数据</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative reveal-on-scroll">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-3xl blur-2xl"></div>
-                    <div class="relative bg-dark-800/50 border border-white/10 rounded-2xl p-6 backdrop-blur-xl">
-                        <div class="flex items-center gap-2 mb-4 pb-4 border-b border-white/5">
-                            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                            <span class="ml-2 text-xs text-slate-500 font-mono">de_product_competitor_analyst.yaml</span>
-                        </div>
-                        <pre class="text-sm font-mono text-slate-300 overflow-x-auto"><code><span class="text-purple-400">api_version</span>: <span class="text-green-400">"employee.hicloud/v2.1"</span>
-<span class="text-purple-400">kind</span>: <span class="text-green-400">"DigitalEmployee"</span>
-<span class="text-purple-400">metadata</span>:
-  <span class="text-purple-400">id</span>: <span class="text-green-400">"de_product_competitor_analyst"</span>
-  <span class="text-purple-400">display_name</span>: <span class="text-green-400">"竞品情报分析数字员工"</span>
-<span class="text-purple-400">profile</span>:
-  <span class="text-purple-400">role</span>: <span class="text-green-400">"产品竞品分析师"</span>
-  <span class="text-purple-400">responsibility</span>:
-    - <span class="text-green-400">"监控竞品公开动态"</span>
-    - <span class="text-green-400">"整理竞品变化摘要"</span>
-    - <span class="text-green-400">"生成日报、周报和预警"</span>
-<span class="text-purple-400">assets</span>:
-  <span class="text-purple-400">skills</span>: [skill_collect_updates, ...]
-  <span class="text-purple-400">connectors</span>: [connector_feishu, ...]
-  <span class="text-purple-400">workflows</span>: [workflow_daily_report, ...]</code></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Core Assets -->
-    <section id="assets" class="relative py-24 lg:py-32 bg-dark-900/50">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.08),transparent_50%)]"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/20 text-sm text-accent-400 mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    核心资产体系
-                </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-                    六层资产，<span class="text-accent-400">完整闭环</span>
-                </h2>
-                <p class="text-lg text-slate-400">
-                    从原子技能到完整解决方案，每一层都有明确定义、标准规范和可验证的质量门禁
-                </p>
-            </div>
-            
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">数字员工资产包</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">DigitalEmployeePackage — 一个完整数字员工的全部资产集合，包含定义、技能、连接器、工作流和任务</p>
-                    <a href="https://github.com/bangwozuo/digital-employees-zh" target="_blank" class="inline-flex items-center gap-1 text-sm text-primary-400 hover:text-primary-300 transition-colors">
-                        浏览资产包 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-                
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">业务技能</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">BusinessSkill — 有明确业务目标、输入输出 Schema、Prompt 和测试用例的最小可执行能力单元</p>
-                    <a href="https://github.com/bangwozuo/digital-employee-skills-zh" target="_blank" class="inline-flex items-center gap-1 text-sm text-accent-400 hover:text-accent-300 transition-colors">
-                        浏览技能库 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-                
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">业务连接器</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">BusinessConnector — 连接飞书、微信、钉钉、GitHub 等外部平台的 Spec、Mock 和权限说明</p>
-                    <a href="https://github.com/bangwozuo/digital-employee-connectors-zh" target="_blank" class="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 transition-colors">
-                        浏览连接器 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-                
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">场景工作流</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">ScenarioWorkflow — 面向明确业务场景的流程编排，如竞品日报、会议纪要、内容发布</p>
-                    <a href="https://github.com/bangwozuo/digital-employee-workflows-zh" target="_blank" class="inline-flex items-center gap-1 text-sm text-amber-400 hover:text-amber-300 transition-colors">
-                        浏览工作流 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-                
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-rose-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">日常与定时任务</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">DailyTask / ScheduledTask — 用户手动触发入口和 cron 自动触发任务，展示数字员工的主动工作能力</p>
-                    <a href="https://github.com/bangwozuo/digital-employee-schedules-zh" target="_blank" class="inline-flex items-center gap-1 text-sm text-rose-400 hover:text-rose-300 transition-colors">
-                        浏览任务模板 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-                
-                <div class="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-cyan-500/30 hover:bg-white/[0.07] transition-all duration-300 reveal-on-scroll">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">质量与规范</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">QualityReport / PackageManifest — 四层验证、七道门审核、风险分级和平台导入标准</p>
-                    <a href="https://github.com/bangwozuo/digital-employee-quality-gates" target="_blank" class="inline-flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
-                        浏览质量门禁 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Repository Matrix -->
-    <section id="repositories" class="relative py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-400 mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    开源仓库矩阵
-                </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-                    一入口，两主线，<span class="text-emerald-400">十五仓库</span>
-                </h2>
-                <p class="text-lg text-slate-400">
-                    标准规范线定义规则，集合资产线沉淀内容，单员工示例负责传播
-                </p>
-            </div>
-            
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Entry -->
-                <a href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-gradient-to-br from-primary-600/20 to-accent-600/20 border border-primary-500/20 hover:border-primary-500/40 transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                        </div>
-                        <span class="text-xs text-primary-400 font-medium bg-primary-500/10 px-2 py-1 rounded-full">总入口</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">awesome-digital-employees-zh</h3>
-                    <p class="text-slate-500 text-sm">品牌入口、导航入口、Star 承接入口、增长入口</p>
-                </a>
-                
-                <!-- Spec Line -->
-                <a href="https://github.com/bangwozuo/digital-employee-spec" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-spec</h3>
-                    <p class="text-slate-500 text-sm">总规范仓 — Spec、Schema、Manifest 标准</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-taxonomy" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-taxonomy</h3>
-                    <p class="text-slate-500 text-sm">分类体系仓 — 20 个行业分类、岗位、标签</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-manifest" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-manifest</h3>
-                    <p class="text-slate-500 text-sm">Manifest 标准仓 — YAML 模板、JSON Schema</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-quality-gates" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-quality-gates</h3>
-                    <p class="text-slate-500 text-sm">质量审核仓 — 四层验证、七道门审核</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-marketplace-spec" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-marketplace-spec</h3>
-                    <p class="text-slate-500 text-sm">商品化规范仓 — 定价、转化、SEO 规范</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-devkit" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-primary-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">规范线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-primary-300 transition-colors">digital-employee-devkit</h3>
-                    <p class="text-slate-500 text-sm">开发工具仓 — CLI、校验器、生成器</p>
-                </a>
-                
-                <!-- Asset Line -->
-                <a href="https://github.com/bangwozuo/digital-employees-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employees-zh</h3>
-                    <p class="text-slate-500 text-sm">数字员工资产包集合 — 20 个分类完整资产</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-skills-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-skills-zh</h3>
-                    <p class="text-slate-500 text-sm">业务技能候选集合 — Prompt、Schema、测试</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-connectors-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-connectors-zh</h3>
-                    <p class="text-slate-500 text-sm">连接器规格集合 — 飞书、微信、钉钉、GitHub</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-workflows-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-workflows-zh</h3>
-                    <p class="text-slate-500 text-sm">场景工作流集合 — 竞品日报、会议纪要等</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-schedules-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-schedules-zh</h3>
-                    <p class="text-slate-500 text-sm">任务模板集合 — 日常任务、定时任务</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-teams-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-teams-zh</h3>
-                    <p class="text-slate-500 text-sm">数字员工组模板 — 团队方案、解决方案包</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-examples" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-examples</h3>
-                    <p class="text-slate-500 text-sm">单员工开源示例 — 10 个开箱 Demo</p>
-                </a>
-                
-                <a href="https://github.com/bangwozuo/digital-employee-solution-packs-zh" target="_blank" rel="noopener" class="group p-5 rounded-xl bg-white/5 border border-white/5 hover:border-accent-500/30 hover:bg-white/[0.07] transition-all hover:scale-[1.02] reveal-on-scroll">
-                    <div class="flex items-start justify-between mb-3">
-                        <div class="w-10 h-10 rounded-lg bg-accent-500/10 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium bg-white/5 px-2 py-1 rounded-full">资产线</span>
-                    </div>
-                    <h3 class="text-white font-semibold mb-1 group-hover:text-accent-300 transition-colors">digital-employee-solution-packs-zh</h3>
-                    <p class="text-slate-500 text-sm">解决方案包 — 一人公司、电商、外包方案</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Start -->
-    <section id="quickstart" class="relative py-24 lg:py-32 bg-dark-900/50">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(139,92,246,0.08),transparent_50%)]"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal-on-scroll">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-sm text-rose-400 mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    快速开始
-                </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-6">
-                    三步拥有你的<span class="text-rose-400">数字员工</span>
-                </h2>
-                <p class="text-lg text-slate-400">
-                    从发现到运行，只需几分钟
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="relative p-8 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm reveal-on-scroll">
-                    <div class="absolute -top-4 left-8 w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-primary-500/30">1</div>
-                    <div class="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 mt-2">
-                        <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">发现资产</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        浏览 <a href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" class="text-primary-400 hover:underline">awesome-digital-employees-zh</a> 总入口，按 20 个行业分类找到适合你的数字员工资产包。
-                    </p>
-                    <div class="bg-dark-800 rounded-lg p-3 font-mono text-xs text-slate-500 border border-white/5">
-                        git clone https://github.com/bangwozuo/digital-employee-examples.git
-                    </div>
-                </div>
-                
-                <div class="relative p-8 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm reveal-on-scroll">
-                    <div class="absolute -top-4 left-8 w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-accent-500/30">2</div>
-                    <div class="w-12 h-12 rounded-xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mb-4 mt-2">
-                        <svg class="w-6 h-6 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">配置运行</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        按照 README 配置环境变量，运行 Mock 测试验证数字员工能力。每个资产包都有完整的测试用例和示例数据。
-                    </p>
-                    <div class="bg-dark-800 rounded-lg p-3 font-mono text-xs text-slate-500 border border-white/5">
-                        pytest skills/ && pytest connectors/
-                    </div>
-                </div>
-                
-                <div class="relative p-8 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm reveal-on-scroll">
-                    <div class="absolute -top-4 left-8 w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/30">3</div>
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4 mt-2">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">导入平台</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        通过 package.yaml 和 employee.yaml 将数字员工导入帮我做平台，启用定时任务，让数字员工开始为你工作。
-                    </p>
-                    <div class="bg-dark-800 rounded-lg p-3 font-mono text-xs text-slate-500 border border-white/5">
-                        # 平台自动识别 package.yaml
-                        # 一键导入 → 配置 → 运行
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Community -->
-    <section id="community" class="relative py-24 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative rounded-3xl bg-gradient-to-br from-primary-600/10 via-accent-600/10 to-primary-600/10 border border-white/10 p-8 sm:p-12 lg:p-16 overflow-hidden reveal-on-scroll">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 rounded-full blur-[80px]"></div>
-                <div class="absolute bottom-0 left-0 w-64 h-64 bg-accent-500/10 rounded-full blur-[80px]"></div>
-                
-                <div class="relative text-center max-w-2xl mx-auto">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
-                        加入社区，共创数字员工生态
-                    </h2>
-                    <p class="text-lg text-slate-400 mb-8">
-                        无论是提交新的数字员工资产包、改进规范文档，还是分享使用案例，你的贡献都将帮助更多小微企业拥有 AI 能力。
-                    </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a href="https://github.com/bangwozuo/awesome-digital-employees-zh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="px-8 py-4 bg-white text-dark-900 font-semibold rounded-xl hover:bg-slate-100 transition-all hover:scale-105 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                            参与贡献
-                        </a>
-                        <a href="https://github.com/bangwozuo" target="_blank" rel="noopener" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold rounded-xl transition-all hover:scale-105 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                            点亮 Star
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="relative py-12 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        </div>
-                        <span class="text-white font-bold">帮我做平台</span>
-                    </div>
-                    <p class="text-slate-500 text-sm leading-relaxed">
-                        面向中国小微企业、一人公司、个体创业者的开源数字员工资产包标准库与能力集合。
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">规范线</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://github.com/bangwozuo/digital-employee-spec" target="_blank" class="text-slate-500 hover:text-primary-400 text-sm transition-colors">digital-employee-spec</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-manifest" target="_blank" class="text-slate-500 hover:text-primary-400 text-sm transition-colors">digital-employee-manifest</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-quality-gates" target="_blank" class="text-slate-500 hover:text-primary-400 text-sm transition-colors">digital-employee-quality-gates</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-devkit" target="_blank" class="text-slate-500 hover:text-primary-400 text-sm transition-colors">digital-employee-devkit</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">资产线</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://github.com/bangwozuo/digital-employees-zh" target="_blank" class="text-slate-500 hover:text-accent-400 text-sm transition-colors">digital-employees-zh</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-skills-zh" target="_blank" class="text-slate-500 hover:text-accent-400 text-sm transition-colors">digital-employee-skills-zh</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-examples" target="_blank" class="text-slate-500 hover:text-accent-400 text-sm transition-colors">digital-employee-examples</a></li>
-                        <li><a href="https://github.com/bangwozuo/digital-employee-workflows-zh" target="_blank" class="text-slate-500 hover:text-accent-400 text-sm transition-colors">digital-employee-workflows-zh</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">资源</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" class="text-slate-500 hover:text-white text-sm transition-colors">总入口仓库</a></li>
-                        <li><a href="https://github.com/bangwozuo/awesome-digital-employees-zh/blob/main/CONTRIBUTING.md" target="_blank" class="text-slate-500 hover:text-white text-sm transition-colors">贡献指南</a></li>
-                        <li><a href="https://github.com/bangwozuo/awesome-digital-employees-zh/blob/main/CODE_OF_CONDUCT.md" target="_blank" class="text-slate-500 hover:text-white text-sm transition-colors">行为准则</a></li>
-                        <li><a href="https://github.com/bangwozuo/awesome-digital-employees-zh/blob/main/SECURITY.md" target="_blank" class="text-slate-500 hover:text-white text-sm transition-colors">安全政策</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-slate-600 text-sm">
-                    © 2025 帮我做平台. 基于 CC-BY-4.0 / Apache-2.0 / MIT 协议开源.
-                </p>
-                <div class="flex items-center gap-4">
-                    <a href="https://github.com/bangwozuo" target="_blank" rel="noopener" class="text-slate-500 hover:text-white transition-colors">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+<section class="group"><div class="group-head"><h2>本地生活商家</h2><p>探店内容、差评处置、私域复购、团购引流与排班调度 · 7 名员工</p></div><div class="grid">
+<a class="card" href="https://github.com/bangwozuo/local-content-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/local-content-zh@main/docs/assets/hero.gif" alt="探店编导 演示"><div class="card-body"><h3>探店编导</h3><p class="desc">探店短视频编导</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/review-firefighter-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/review-firefighter-zh@main/docs/assets/hero.gif" alt="口碑捍卫者 演示"><div class="card-body"><h3>口碑捍卫者</h3><p class="desc">差评灭火官</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/local-retention-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/local-retention-zh@main/docs/assets/hero.gif" alt="复购管家 演示"><div class="card-body"><h3>复购管家</h3><p class="desc">私域复购管家</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/daily-report-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/daily-report-zh@main/docs/assets/hero.gif" alt="经营日报员 演示"><div class="card-body"><h3>经营日报员</h3><p class="desc">门店经营日报分析师</p><div class="meta"><span>3 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/groupbuy-designer-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/groupbuy-designer-zh@main/docs/assets/hero.gif" alt="团购设计师 演示"><div class="card-body"><h3>团购设计师</h3><p class="desc">团购引流设计师</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/appointment-scheduler-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/appointment-scheduler-zh@main/docs/assets/hero.gif" alt="排班调度师 演示"><div class="card-body"><h3>排班调度师</h3><p class="desc">预约排班调度员</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+<a class="card" href="https://github.com/bangwozuo/member-reactivation-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/member-reactivation-zh@main/docs/assets/hero.gif" alt="会员唤醒师 演示"><div class="card-body"><h3>会员唤醒师</h3><p class="desc">会员唤醒师</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
+</div></section>
+<div class="spec">
+<h2>规范与质量门禁</h2>
+<ul>
+<li>资产格式对齐 <a href="https://github.com/bangwozuo/digital-employee-spec" target="_blank" rel="noopener">digital-employee-spec</a>（SKILL.md 事实标准），可流入 Coze / WorkBuddy / Dify 生态</li>
+<li>全部 256 个资产通过 V1-V10 深度校验：确定性脚本实跑、示例输入真实数据、零占位符</li>
+<li>每名员工的仓库内含 pytest 结构校验与真实执行录播（GIF 内联 README，点开即看）</li>
+</ul>
+</div>
+</main>
+<footer class="wrap">
+<p>帮我做平台 bangwozuo · <a href="https://github.com/bangwozuo/awesome-digital-employees-zh">Awesome 入口</a> · <a href="https://github.com/bangwozuo/digital-employee-spec">规范</a> · 内容 CC-BY-4.0 开源</p>
+</footer>
 </body>
 </html>
