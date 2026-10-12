@@ -5,113 +5,401 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>帮我做平台 · 数字员工开源生态</title>
 <meta name="description" content="25 名开箱即用的中文数字员工：无需 API Key、无需部署、平台无关。137 技能 + 119 工作流，全部开源。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑‍💼</text></svg>">
 <style>
-:root{--bg:#0d1117;--panel:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#3fb950;--accent2:#58a6ff}
+:root{
+  --bg:#0A0D12; --surface:#101620; --elevated:#151D2A; --line:rgba(255,255,255,.075);
+  --text:#E9EEF5; --muted:#93A1B4; --dim:#6B7A8D;
+  --green:#34D399; --green-d:#10B981; --blue:#60A5FA;
+  --radius:14px; --maxw:1120px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-header{padding:72px 0 40px;text-align:center;border-bottom:1px solid var(--border)}
-header h1{font-size:2.6rem;letter-spacing:.02em}
-header h1 em{font-style:normal;color:var(--accent)}
-.tagline{margin:14px auto 0;max-width:640px;color:var(--muted);font-size:1.05rem}
-.cta{margin-top:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--text);transition:.2s}
-.btn:hover{border-color:var(--accent2)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#04140a}
-.btn.primary:hover{filter:brightness(1.1)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:-28px auto 0;max-width:860px;padding:0 20px;position:relative}
-.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 10px;text-align:center}
-.stat b{display:block;font-size:1.7rem;color:var(--accent)}
-.stat span{color:var(--muted);font-size:.85rem}
-main{padding:56px 0 80px}
-.intro{max-width:720px;margin:0 auto 44px;text-align:center;color:var(--muted)}
-.intro b{color:var(--text)}
-.group{margin-top:48px}
-.group-head h2{font-size:1.45rem}
-.group-head p{color:var(--muted);font-size:.95rem;margin-top:4px}
-.grid{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);transition:.2s;display:block}
-.card:hover{transform:translateY(-3px);border-color:var(--accent2)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
-.card-body{padding:14px 16px 16px}
-.card-body h3{font-size:1.08rem}
-.desc{color:var(--muted);font-size:.88rem;margin-top:4px}
-.meta{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
-.meta .play{color:var(--accent);font-weight:600;margin-left:auto}
-.spec{margin-top:64px;border:1px solid var(--border);border-radius:14px;padding:28px;background:var(--panel)}
-.spec h2{font-size:1.3rem}
-.spec ul{margin:12px 0 0 20px;color:var(--muted)}
-.spec a{color:var(--accent2)}
-footer{border-top:1px solid var(--border);padding:26px 0;color:var(--muted);font-size:.88rem;text-align:center}
-footer a{color:var(--accent2)}
-@media(max-width:640px){header h1{font-size:1.9rem}}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,13,18,.78);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:0 28px;height:62px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.01em}
+.brand .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--green-d),var(--blue));display:grid;place-items:center;font-size:14px}
+.nav-links{display:flex;gap:22px;margin-left:auto;font-size:.9rem;color:var(--muted)}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:.85rem;font-weight:600;padding:7px 15px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.nav-cta:hover{border-color:var(--green-d);color:var(--green)}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:96px 0 72px;text-align:center;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% 0 auto;height:560px;
+  background:radial-gradient(620px 300px at 50% 40%,rgba(16,185,129,.16),transparent 65%),
+             radial-gradient(560px 280px at 22% 20%,rgba(96,165,250,.10),transparent 60%);pointer-events:none}
+.hero>*{position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);
+  border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(52,211,153,.15)}
+h1{margin-top:26px;font-size:clamp(2.1rem,4.6vw,3.35rem);line-height:1.18;letter-spacing:-.015em;font-weight:800}
+h1 .g{background:linear-gradient(100deg,#7EE7C1 5%,var(--green) 40%,var(--blue) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{margin:20px auto 0;max-width:660px;color:var(--muted);font-size:1.06rem}
+.actions{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:11px;font-weight:600;font-size:.94rem;
+  border:1px solid var(--line);background:var(--surface);transition:.18s ease}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.18)}
+.btn.primary{background:linear-gradient(135deg,var(--green-d),#22C55E);color:#04160D;border-color:transparent;box-shadow:0 8px 26px -12px rgba(16,185,129,.75)}
+.btn.primary:hover{box-shadow:0 10px 30px -10px rgba(16,185,129,.85)}
+.trust{margin-top:20px;color:var(--dim);font-size:.85rem;letter-spacing:.02em}
+
+/* ---------- stats ---------- */
+.stats{max-width:var(--maxw);margin:8px auto 0;padding:0 28px}
+.stats-in{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(180deg,var(--surface),rgba(16,22,32,.6));overflow:hidden}
+.stat{padding:22px 12px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-size:1.65rem;font-weight:750;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff,#9FB6CE);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{color:var(--dim);font-size:.8rem;letter-spacing:.04em}
+@media(max-width:760px){.stats-in{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}}
+
+/* ---------- section ---------- */
+section{padding:84px 0 0}
+.sec-head{text-align:center;margin-bottom:38px}
+.sec-head h2{font-size:1.6rem;letter-spacing:-.01em}
+.sec-head p{color:var(--muted);margin-top:8px;font-size:.95rem}
+
+/* ---------- showcase ---------- */
+.show-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:18px}
+@media(max-width:900px){.show-grid{grid-template-columns:1fr}}
+.show-card{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden;transition:.2s}
+.show-card:hover{transform:translateY(-3px);border-color:rgba(52,211,153,.45)}
+.show-frame{padding:10px 10px 0}
+.show-frame img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;display:block;background:#05070A}
+.show-cap{display:flex;align-items:baseline;gap:10px;padding:12px 16px 16px}
+.show-cap b{font-size:.98rem}
+.show-cap span{color:var(--dim);font-size:.8rem;margin-left:auto}
+
+/* ---------- directory ---------- */
+.group{margin-top:52px}
+.group:first-of-type{margin-top:0}
+.group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.group-head .dot{width:8px;height:8px;border-radius:50%}
+.group-head h2{font-size:1.22rem;letter-spacing:-.01em}
+.group-head .count{font-size:.76rem;color:var(--dim);border:1px solid var(--line);padding:2px 9px;border-radius:999px}
+.group-head p{flex-basis:100%;color:var(--muted);font-size:.88rem;margin-top:2px}
+.emp-grid{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(316px,1fr));gap:14px}
+.emp{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:18px 20px;transition:.18s ease;display:block}
+.emp:hover{background:var(--elevated);border-color:rgba(96,165,250,.4);transform:translateY(-2px)}
+.emp-top{display:flex;align-items:center;gap:10px}
+.emp h3{font-size:1.03rem;font-weight:650;letter-spacing:-.005em}
+.emp .arrow{margin-left:auto;color:var(--dim);transition:.18s}
+.emp:hover .arrow{color:var(--green);transform:translateX(3px)}
+.emp p{color:var(--muted);font-size:.86rem;margin-top:7px;min-height:2.6em}
+.chips{margin-top:13px;display:flex;gap:8px;flex-wrap:wrap;font-size:.75rem}
+.chips span{color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.chips .chip-demo{color:var(--green);border-color:rgba(52,211,153,.35)}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.step{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:26px 24px}
+.step .n{font-family:var(--mono);font-size:.78rem;color:var(--green);letter-spacing:.08em}
+.step h3{margin-top:12px;font-size:1.05rem}
+.step p{color:var(--muted);font-size:.88rem;margin-top:8px}
+.step code{display:block;margin-top:14px;font-family:var(--mono);font-size:.78rem;color:#B9CBDD;
+  background:#070A0E;border:1px solid var(--line);border-radius:9px;padding:11px 13px;overflow-x:auto;white-space:pre}
+
+/* ---------- quality ---------- */
+.quality{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.q{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,var(--surface),rgba(16,22,32,.55));padding:24px}
+.q b{display:block;font-size:1.02rem}
+.q p{color:var(--muted);font-size:.86rem;margin-top:8px}
+.q .ok{color:var(--green);font-weight:700;margin-right:7px}
+
+/* ---------- footer ---------- */
+footer{margin-top:96px;border-top:1px solid var(--line);padding:40px 0 46px;color:var(--dim);font-size:.86rem}
+.foot-in{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.foot-in .links{margin-left:auto;display:flex;gap:20px}
+.foot-in a:hover{color:var(--text)}
 </style>
 </head>
 <body>
-<header class="wrap">
-<h1>帮我做平台<em>.</em><br>数字员工开源生态</h1>
-<p class="tagline">25 名开箱即用的中文数字员工，覆盖独立开发者、自媒体、电商与本地生活四大客群——像招一个远程同事一样，给生意配上 AI 员工。</p>
-<div class="cta">
-<a class="btn primary" href="https://github.com/bangwozuo/awesome-digital-employees-zh">GitHub 总入口</a>
-<a class="btn" href="https://github.com/bangwozuo/digital-employees-hub-zh">员工总目录 + 视频索引</a>
-</div>
+<nav class="nav"><div class="nav-in">
+  <a class="brand" href="#top"><span class="mark">◈</span>帮我做平台</a>
+  <div class="nav-links">
+    <a href="#showcase">看效果</a>
+    <a href="#directory">数字员工</a>
+    <a href="#start">快速上手</a>
+    <a href="#quality">规范质量</a>
+  </div>
+  <a class="nav-cta" href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" rel="noopener">GitHub 总入口</a>
+</div></nav>
+
+<header class="hero wrap" id="top">
+  <span class="eyebrow"><i></i>25 名数字员工已上线 · 全部开源</span>
+  <h1>把 AI 变成你的员工<br><span class="g">而不是又一个聊天框</span></h1>
+  <p class="lede">面向独立开发者、自媒体、电商与本地生活的中文数字员工资产包：技能、工作流、演示视频与质量校验一体交付，导入即用。</p>
+  <div class="actions">
+    <a class="btn primary" href="#directory">浏览 25 名数字员工</a>
+    <a class="btn" href="https://github.com/bangwozuo/digital-employees-hub-zh" target="_blank" rel="noopener">员工总目录 + 视频索引</a>
+  </div>
+  <p class="trust">无需 API Key · 无需部署 · 平台无关 · 模型算力来自你自己的订阅</p>
 </header>
-<div class="stats">
-<div class="stat"><b>25</b><span>数字员工</span></div>
-<div class="stat"><b>137</b><span>原子技能</span></div>
-<div class="stat"><b>119</b><span>场景工作流</span></div>
-<div class="stat"><b>256</b><span>演示视频</span></div>
-<div class="stat"><b>4</b><span>覆盖客群</span></div>
-</div>
+
+<div class="stats"><div class="stats-in">
+  <div class="stat"><b>25</b><span>数字员工</span></div>
+  <div class="stat"><b>137</b><span>原子技能</span></div>
+  <div class="stat"><b>119</b><span>场景工作流</span></div>
+  <div class="stat"><b>256</b><span>演示视频</span></div>
+  <div class="stat"><b>4</b><span>覆盖客群</span></div>
+</div></div>
+
 <main class="wrap">
-<p class="intro"><b>无需 API Key · 无需部署 · 平台无关</b>——每个数字员工是一个开源仓库：SKILL.md 技能 + 工作流 + 演示视频 + 结构校验，导入 Coze / WorkBuddy / Dify / Claude / ChatGPT 即用。</p>
-<section class="group"><div class="group-head"><h2>独立开发者 / 一人公司</h2><p>增长获客、发布冲刺、SEO 矩阵、反馈聚合与多平台分发 · 5 名员工</p></div><div class="grid">
-<a class="card" href="https://github.com/bangwozuo/coldstart-growth-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/coldstart-growth-zh@main/docs/assets/hero.gif" alt="出海增长官 演示"><div class="card-body"><h3>出海增长官</h3><p class="desc">出海冷启动获客官（Build-in-Public 内容引擎）</p><div class="meta"><span>7 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/launch-commander-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/launch-commander-zh@main/docs/assets/hero.gif" alt="发布指挥官 演示"><div class="card-body"><h3>发布指挥官</h3><p class="desc">发布日冲刺指挥官（PH Launch Commander）</p><div class="meta"><span>9 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/seo-matrix-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/seo-matrix-zh@main/docs/assets/hero.gif" alt="SEO 架构师 演示"><div class="card-body"><h3>SEO 架构师</h3><p class="desc">SEO 内容矩阵助理（独立站增长助理）</p><div class="meta"><span>7 技能</span><span>6 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/feedback-hub-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/feedback-hub-zh@main/docs/assets/hero.gif" alt="反馈分析师 演示"><div class="card-body"><h3>反馈分析师</h3><p class="desc">用户反馈聚合分析师</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/multi-publish-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/multi-publish-zh@main/docs/assets/hero.gif" alt="分发中控 演示"><div class="card-body"><h3>分发中控</h3><p class="desc">多平台发布与数据回捞助理</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-</div></section>
+<section id="showcase">
+  <div class="sec-head">
+    <h2>看效果，再看代码</h2>
+    <p>每名员工都有一支真实执行录播——这是四个客群的代表切片</p>
+  </div>
+  <div class="show-grid">
+      <a class="show-card" href="https://github.com/bangwozuo/coldstart-growth-zh" target="_blank" rel="noopener">
+        <div class="show-frame"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/coldstart-growth-zh@main/docs/assets/hero.gif" alt="出海增长官 真实执行录播"></div>
+        <div class="show-cap"><b>出海增长官</b><span>OPC</span></div>
+      </a>
+      <a class="show-card" href="https://github.com/bangwozuo/topic-planner-zh" target="_blank" rel="noopener">
+        <div class="show-frame"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/topic-planner-zh@main/docs/assets/hero.gif" alt="选题策划师 真实执行录播"></div>
+        <div class="show-cap"><b>选题策划师</b><span>自媒体创作者</span></div>
+      </a>
+      <a class="show-card" href="https://github.com/bangwozuo/product-visual-zh" target="_blank" rel="noopener">
+        <div class="show-frame"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/product-visual-zh@main/docs/assets/hero.gif" alt="商品视觉师 真实执行录播"></div>
+        <div class="show-cap"><b>商品视觉师</b><span>电商小卖家</span></div>
+      </a>
+      <a class="show-card" href="https://github.com/bangwozuo/review-firefighter-zh" target="_blank" rel="noopener">
+        <div class="show-frame"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/review-firefighter-zh@main/docs/assets/hero.gif" alt="口碑捍卫者 真实执行录播"></div>
+        <div class="show-cap"><b>口碑捍卫者</b><span>本地生活商家</span></div>
+      </a>
+  </div>
+</section>
 
-<section class="group"><div class="group-head"><h2>自媒体创作者</h2><p>选题、脚本、评论区、分发改写与跨平台数据复盘 · 6 名员工</p></div><div class="grid">
-<a class="card" href="https://github.com/bangwozuo/topic-planner-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/topic-planner-zh@main/docs/assets/hero.gif" alt="选题策划师 演示"><div class="card-body"><h3>选题策划师</h3><p class="desc">爆款选题策划师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/script-writer-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/script-writer-zh@main/docs/assets/hero.gif" alt="脚本创作师 演示"><div class="card-body"><h3>脚本创作师</h3><p class="desc">短视频脚本创作师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/engagement-ops-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/engagement-ops-zh@main/docs/assets/hero.gif" alt="评论运营官 演示"><div class="card-body"><h3>评论运营官</h3><p class="desc">评论区运营官</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/funnel-builder-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/funnel-builder-zh@main/docs/assets/hero.gif" alt="引流转化师 演示"><div class="card-body"><h3>引流转化师</h3><p class="desc">私域引流转化师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/cross-post-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/cross-post-zh@main/docs/assets/hero.gif" alt="分发改写师 演示"><div class="card-body"><h3>分发改写师</h3><p class="desc">多平台分发改写师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/data-recap-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/data-recap-zh@main/docs/assets/hero.gif" alt="数据复盘师 演示"><div class="card-body"><h3>数据复盘师</h3><p class="desc">跨平台数据复盘师</p><div class="meta"><span>6 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-</div></section>
+<section id="directory">
+  <div class="sec-head">
+    <h2>数字员工目录</h2>
+    <p>按客群分组，点进去是完整仓库：SKILL.md、prompt、schema、实跑产物与结构校验</p>
+  </div>
+    <div class="group">
+      <div class="group-head">
+        <span class="dot" style="background:#60A5FA"></span>
+        <h2>独立开发者 / 一人公司</h2>
+        <span class="count">5 名</span>
+        <p>增长获客 · 发布冲刺 · SEO 矩阵 · 反馈聚合 · 多平台分发</p>
+      </div>
+      <div class="emp-grid">
+        <a class="emp" href="https://github.com/bangwozuo/coldstart-growth-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>出海增长官</h3><span class="arrow">→</span></div>
+          <p>出海冷启动获客官（Build-in-Public 内容引擎）</p>
+          <div class="chips"><span>7 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/launch-commander-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>发布指挥官</h3><span class="arrow">→</span></div>
+          <p>发布日冲刺指挥官（PH Launch Commander）</p>
+          <div class="chips"><span>9 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/seo-matrix-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>SEO 架构师</h3><span class="arrow">→</span></div>
+          <p>SEO 内容矩阵助理（独立站增长助理）</p>
+          <div class="chips"><span>7 技能</span><span>6 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/feedback-hub-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>反馈分析师</h3><span class="arrow">→</span></div>
+          <p>用户反馈聚合分析师</p>
+          <div class="chips"><span>6 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/multi-publish-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>分发中控</h3><span class="arrow">→</span></div>
+          <p>多平台发布与数据回捞助理</p>
+          <div class="chips"><span>6 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="group">
+      <div class="group-head">
+        <span class="dot" style="background:#A78BFA"></span>
+        <h2>自媒体创作者</h2>
+        <span class="count">6 名</span>
+        <p>选题策划 · 脚本创作 · 评论运营 · 分发改写 · 数据复盘</p>
+      </div>
+      <div class="emp-grid">
+        <a class="emp" href="https://github.com/bangwozuo/topic-planner-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>选题策划师</h3><span class="arrow">→</span></div>
+          <p>爆款选题策划师</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/script-writer-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>脚本创作师</h3><span class="arrow">→</span></div>
+          <p>短视频脚本创作师</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/engagement-ops-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>评论运营官</h3><span class="arrow">→</span></div>
+          <p>评论区运营官</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/funnel-builder-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>引流转化师</h3><span class="arrow">→</span></div>
+          <p>私域引流转化师</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/cross-post-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>分发改写师</h3><span class="arrow">→</span></div>
+          <p>多平台分发改写师</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/data-recap-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>数据复盘师</h3><span class="arrow">→</span></div>
+          <p>跨平台数据复盘师</p>
+          <div class="chips"><span>6 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="group">
+      <div class="group-head">
+        <span class="dot" style="background:#F59E0B"></span>
+        <h2>电商小卖家</h2>
+        <span class="count">7 名</span>
+        <p>商品视觉 · 客服售后 · 评价运营 · Listing · 多店选品</p>
+      </div>
+      <div class="emp-grid">
+        <a class="emp" href="https://github.com/bangwozuo/product-visual-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>商品视觉师</h3><span class="arrow">→</span></div>
+          <p>视觉设计师·小图</p>
+          <div class="chips"><span>6 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/shop-support-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>店铺客服官</h3><span class="arrow">→</span></div>
+          <p>客服专员·小服</p>
+          <div class="chips"><span>6 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/review-manager-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>评价运营官</h3><span class="arrow">→</span></div>
+          <p>评价运营专员·小评</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/listing-copy-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>Listing 文案师</h3><span class="arrow">→</span></div>
+          <p>上架文案专员·小文</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/multi-shop-ops-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>多店运营官</h3><span class="arrow">→</span></div>
+          <p>多平台运营助理·小铺</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/shop-video-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>店铺编导</h3><span class="arrow">→</span></div>
+          <p>内容编导·小导</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/product-research-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>选品分析师</h3><span class="arrow">→</span></div>
+          <p>选品分析师·小察</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="group">
+      <div class="group-head">
+        <span class="dot" style="background:#34D399"></span>
+        <h2>本地生活商家</h2>
+        <span class="count">7 名</span>
+        <p>探店内容 · 口碑处置 · 私域复购 · 团购设计 · 排班调度</p>
+      </div>
+      <div class="emp-grid">
+        <a class="emp" href="https://github.com/bangwozuo/local-content-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>探店编导</h3><span class="arrow">→</span></div>
+          <p>探店短视频编导</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/review-firefighter-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>口碑捍卫者</h3><span class="arrow">→</span></div>
+          <p>差评灭火官</p>
+          <div class="chips"><span>4 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/local-retention-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>复购管家</h3><span class="arrow">→</span></div>
+          <p>私域复购管家</p>
+          <div class="chips"><span>5 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/daily-report-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>经营日报员</h3><span class="arrow">→</span></div>
+          <p>门店经营日报分析师</p>
+          <div class="chips"><span>3 技能</span><span>4 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/groupbuy-designer-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>团购设计师</h3><span class="arrow">→</span></div>
+          <p>团购引流设计师</p>
+          <div class="chips"><span>4 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/appointment-scheduler-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>排班调度师</h3><span class="arrow">→</span></div>
+          <p>预约排班调度员</p>
+          <div class="chips"><span>4 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+        <a class="emp" href="https://github.com/bangwozuo/member-reactivation-zh" target="_blank" rel="noopener">
+          <div class="emp-top"><h3>会员唤醒师</h3><span class="arrow">→</span></div>
+          <p>会员唤醒师</p>
+          <div class="chips"><span>4 技能</span><span>5 工作流</span><span class="chip-demo">演示视频</span></div>
+        </a>
+      </div>
+    </div>
+</section>
 
-<section class="group"><div class="group-head"><h2>电商小卖家</h2><p>商品视觉、客服、评价、Listing、多店运营与选品 · 7 名员工</p></div><div class="grid">
-<a class="card" href="https://github.com/bangwozuo/product-visual-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/product-visual-zh@main/docs/assets/hero.gif" alt="商品视觉师 演示"><div class="card-body"><h3>商品视觉师</h3><p class="desc">视觉设计师·小图</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/shop-support-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/shop-support-zh@main/docs/assets/hero.gif" alt="店铺客服官 演示"><div class="card-body"><h3>店铺客服官</h3><p class="desc">客服专员·小服</p><div class="meta"><span>6 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/review-manager-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/review-manager-zh@main/docs/assets/hero.gif" alt="评价运营官 演示"><div class="card-body"><h3>评价运营官</h3><p class="desc">评价运营专员·小评</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/listing-copy-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/listing-copy-zh@main/docs/assets/hero.gif" alt="Listing 文案师 演示"><div class="card-body"><h3>Listing 文案师</h3><p class="desc">上架文案专员·小文</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/multi-shop-ops-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/multi-shop-ops-zh@main/docs/assets/hero.gif" alt="多店运营官 演示"><div class="card-body"><h3>多店运营官</h3><p class="desc">多平台运营助理·小铺</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/shop-video-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/shop-video-zh@main/docs/assets/hero.gif" alt="店铺编导 演示"><div class="card-body"><h3>店铺编导</h3><p class="desc">内容编导·小导</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/product-research-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/product-research-zh@main/docs/assets/hero.gif" alt="选品分析师 演示"><div class="card-body"><h3>选品分析师</h3><p class="desc">选品分析师·小察</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-</div></section>
+<section id="start">
+  <div class="sec-head">
+    <h2>三步上手</h2>
+    <p>不需要配置密钥、不需要跑服务，把 SKILL.md 交给你的智能体平台就行</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="n">STEP 01</div>
+      <h3>挑一名员工</h3>
+      <p>按客群和岗位找到缺口最大的一环，从它的仓库开始。</p>
+      <code>git clone https://github.com/bangwozuo/topic-planner-zh.git</code>
+    </div>
+    <div class="step">
+      <div class="n">STEP 02</div>
+      <h3>读技能定义</h3>
+      <p>每个技能目录含 SKILL.md、prompt、schema 与实跑示例，先跑通再改。</p>
+      <code>cat skills/*/SKILL.md</code>
+    </div>
+    <div class="step">
+      <div class="n">STEP 03</div>
+      <h3>导入平台</h3>
+      <p>粘贴到 Coze / WorkBuddy / Dify / Claude / ChatGPT，按你的业务微调话术。</p>
+      <code>Coze · WorkBuddy · Dify · Claude · ChatGPT</code>
+    </div>
+  </div>
+</section>
 
-<section class="group"><div class="group-head"><h2>本地生活商家</h2><p>探店内容、差评处置、私域复购、团购引流与排班调度 · 7 名员工</p></div><div class="grid">
-<a class="card" href="https://github.com/bangwozuo/local-content-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/local-content-zh@main/docs/assets/hero.gif" alt="探店编导 演示"><div class="card-body"><h3>探店编导</h3><p class="desc">探店短视频编导</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/review-firefighter-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/review-firefighter-zh@main/docs/assets/hero.gif" alt="口碑捍卫者 演示"><div class="card-body"><h3>口碑捍卫者</h3><p class="desc">差评灭火官</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/local-retention-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/local-retention-zh@main/docs/assets/hero.gif" alt="复购管家 演示"><div class="card-body"><h3>复购管家</h3><p class="desc">私域复购管家</p><div class="meta"><span>5 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/daily-report-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/daily-report-zh@main/docs/assets/hero.gif" alt="经营日报员 演示"><div class="card-body"><h3>经营日报员</h3><p class="desc">门店经营日报分析师</p><div class="meta"><span>3 技能</span><span>4 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/groupbuy-designer-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/groupbuy-designer-zh@main/docs/assets/hero.gif" alt="团购设计师 演示"><div class="card-body"><h3>团购设计师</h3><p class="desc">团购引流设计师</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/appointment-scheduler-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/appointment-scheduler-zh@main/docs/assets/hero.gif" alt="排班调度师 演示"><div class="card-body"><h3>排班调度师</h3><p class="desc">预约排班调度员</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-<a class="card" href="https://github.com/bangwozuo/member-reactivation-zh" target="_blank" rel="noopener"><img loading="lazy" src="https://cdn.jsdelivr.net/gh/bangwozuo/member-reactivation-zh@main/docs/assets/hero.gif" alt="会员唤醒师 演示"><div class="card-body"><h3>会员唤醒师</h3><p class="desc">会员唤醒师</p><div class="meta"><span>4 技能</span><span>5 工作流</span><span class="play">▶ 演示视频</span></div></div></a>
-</div></section>
-<div class="spec">
-<h2>规范与质量门禁</h2>
-<ul>
-<li>资产格式对齐 <a href="https://github.com/bangwozuo/digital-employee-spec" target="_blank" rel="noopener">digital-employee-spec</a>（SKILL.md 事实标准），可流入 Coze / WorkBuddy / Dify 生态</li>
-<li>全部 256 个资产通过 V1-V10 深度校验：确定性脚本实跑、示例输入真实数据、零占位符</li>
-<li>每名员工的仓库内含 pytest 结构校验与真实执行录播（GIF 内联 README，点开即看）</li>
-</ul>
-</div>
+<section id="quality">
+  <div class="sec-head">
+    <h2>规范与质量门禁</h2>
+    <p>不是提示词合集，是按资产标准生产、按证据验收的交付物</p>
+  </div>
+  <div class="quality">
+    <div class="q"><b>对齐 digital-employee-spec</b><p>资产格式遵循 SKILL.md 事实标准，可流入 Coze / WorkBuddy / Dify 生态。</p></div>
+    <div class="q"><b><span class="ok">256/256</span>深度校验通过</b><p>V1-V10 全量校验：结构完整、脚本可跑、示例真实、零占位符。</p></div>
+    <div class="q"><b><span class="ok">96</span>个确定性脚本</b><p>数据型技能与工作流附带可执行脚本，实跑产出真实产物入库。</p></div>
+    <div class="q"><b><span class="ok">1500+</span>项结构校验</b><p>每个仓库内置 pytest 门禁，改动可验证，交付可复现。</p></div>
+  </div>
+</section>
 </main>
-<footer class="wrap">
-<p>帮我做平台 bangwozuo · <a href="https://github.com/bangwozuo/awesome-digital-employees-zh">Awesome 入口</a> · <a href="https://github.com/bangwozuo/digital-employee-spec">规范</a> · 内容 CC-BY-4.0 开源</p>
-</footer>
+
+<footer><div class="foot-in">
+  <span>帮我做平台 bangwozuo · 数字员工开源生态</span>
+  <div class="links">
+    <a href="https://github.com/bangwozuo/awesome-digital-employees-zh" target="_blank" rel="noopener">Awesome 入口</a>
+    <a href="https://github.com/bangwozuo/digital-employees-hub-zh" target="_blank" rel="noopener">员工总目录</a>
+    <a href="https://github.com/bangwozuo/digital-employee-spec" target="_blank" rel="noopener">资产规范</a>
+  </div>
+</div></footer>
 </body>
 </html>
